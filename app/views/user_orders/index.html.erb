@@ -1,0 +1,13 @@
+<h1>My Requested Book Details:</h1>
+<div id="id2">
+<h5> UserId: <%= @current_user.id %> </h5>
+
+<% Order.get_users_active_order_ids(@current_user.id).each do |id| %>
+   
+<% cache id do %>
+  <%= render partial: "user-order-cart",
+             locals: { cart_data: Order.find(id).order_items }, cached: true  %>
+ <%end%>
+
+<% end %>
+</div>

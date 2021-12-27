@@ -1,0 +1,24 @@
+<h1 class='heading'>All students requested books </h1>
+
+<h3>Total Requested Books: <%= Order.where(order_status: "queue").count %></h3>
+
+<% Order.where(order_status: "queue").each do |order| %>
+
+  <% cache order do %>
+    
+
+<div class='my-20' >
+  <h3>Borrowed By:  <%= Order.find(order.id).user.name %> </h3>
+  
+  
+  
+  <%= render partial: "active-order-cart",
+             locals: { cart_data: Order.find(order.id).order_items } , cached: true %>
+
+  <%= form_with(url: "/orders/#{order.id}?order_status=completed", method: "PUT", class: "form-container") do %>
+      <button class='btn btn-outline-dark' onclick="this.form.submit()">Accept request </button>
+  <% end %>
+</div>
+<% end %>
+<% end %>
+

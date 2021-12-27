@@ -1,0 +1,42 @@
+
+<h1 class='heading'> 
+Book List Page
+</h1>
+
+<h5 class='form-label-header'>Add new book</h5>
+<%= form_with(url: "/menu_items", method: "POST", class: "form-container", id: "iddd", remote: true) do %>
+      <%= text_field_tag "menu_id", nil, placeholder: "Book Type Id", class: "form-field" %>
+      <%= text_field_tag "name", nil, placeholder: "Name", class: "form-field" %>
+      <%= text_field_tag "description", nil, placeholder: "Description", class: "form-field" %>
+     
+      <input type='submit' value="Add new Book", class="form-field btn-outline-dark", id="ide", remote= "true"/>
+<% end %>
+
+
+<h5 class='form-label-header'>Add Book Type</h5>
+<%= form_with(url: "/menus", method: "POST", class: "form-container") do %>
+      <%= text_field_tag "name", nil, placeholder: "Book Name", class: "form-field" %>
+      <input type='submit' value="Add Book", class="form-field btn-outline-dark" />
+<% end %>
+
+
+
+
+<h5 class='form-label-header'>Change Active Book Type</h5>
+<%= form_with(url: "/active_menus/1", method: "PUT", class: "form-container") do %>
+      <%= text_field_tag "menu_id", nil, placeholder: "Book Id", value: ActiveMenu.first.active_menu, class: "form-field", type: "number" %>
+      <input type='submit' value="Update Active Book Type", class="form-field btn-outline-dark" />
+<% end %>
+
+
+
+
+<h5 class='form-label-header'>Active Books: <%= Menu.get_active_menu_name %></h5>
+<% Menu.all.each do |el| %>
+<% cache el do %>
+  <h4 class='menu-table-header'><%= "#{el.id}. #{el.name}" %></h4>
+  <%= render partial: "menu-table",
+             locals: { menu_data: MenuItem.menu_by_id(el.id) } %>
+<% end %>
+<%end%>
+

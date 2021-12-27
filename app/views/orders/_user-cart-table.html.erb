@@ -1,0 +1,30 @@
+<table class="table  table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        
+        
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    
+    
+      <% cart_data.each do |item| %>
+      <% cache item do %>
+      <tbody id="deleteStudent<%= item.id %>">
+        <tr>
+          <td ><%= item.menu_item_name %></td>
+         
+          
+          <td>
+           
+            <%= form_with(url: "/order_items/#{item.id}", method: "DELETE",remote: true) do %>  
+              <input type="image" src="/trash.svg" class='trash'>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      <% end %>
+      <%end%>
+    
+</table>

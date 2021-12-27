@@ -1,0 +1,30 @@
+<h1 class='logo-name'>
+      
+      LIBRARY MANAGEMENT SYSTEM
+     </h1> 
+<div class="links-container">
+    
+    <div >
+    
+    <a  class="btn btn-outline-dark mr-20" id="signup" ,remote= "true" > sign up </a> 
+    <a  class="btn btn-outline-dark mr-20" id="login" , remote= "true"> login in </a> 
+    </div>
+   <div id="aboutus">
+    </div> 
+</div>
+<script>
+$(document).ready(function() {
+  $('#signup').click(function() {
+    $('#aboutus').load("users/new")
+  });
+});
+</script>
+ 
+
+<script>
+$(document).ready(function() {
+  $('#login').click(function() {
+    $('#aboutus').load("/signin")
+  });
+});
+</script>

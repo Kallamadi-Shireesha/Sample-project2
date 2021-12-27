@@ -1,0 +1,73 @@
+
+<nav class="nav-container">
+    
+    
+    <% if @current_user %>
+        <h6><%= @current_user.name %> , <%= @current_user.role %>! <h6>
+        
+        <!--<%= link_to "Logout", destroy_session_path, method: "delete", data: { confirm: "are ?"}, class: "btn btn-outline-dark" %>-->
+        <a data-confirm="are ?" class="btn btn-outline-dark" rel="nofollow" data-method="delete" href="/signout">Logout</a>
+    <% end %>
+  </nav>
+<div>
+        <p>
+            <% if @current_user.is_owner? %>  
+              
+                <a class="btn btn-outline-dark mr-20" id="new_link" >Edit Book List </a>
+                <a class="btn btn-outline-dark mr-20" id="allstudentrequestedbooks">All Requested  Books</a>
+                <a class="btn btn-outline-dark mr-20" id="ownerreturnedbooks">owner Returned Books</a>
+                
+             
+            <% end %>
+
+                <a class="btn btn-outline-dark mr-20" id="letsborrow" data-remote= "true">letsborrow</a>
+                <a class="btn btn-outline-dark mr-20" id="myBtn" data-remote= "true">My Requested Books</a>
+                <a class="btn btn-outline-dark mr-20" id="sanctioned" data-remote="true">History</a>
+        </p>
+              
+            <div id="aboutus">
+            </div> 
+</div>
+<script>
+$(document).ready(function() {
+  $('#new_link').click(function() {
+    $('#aboutus').load("/menus")
+  });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#allstudentrequestedbooks').click(function() {
+    $('#aboutus').load("/active/orders")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#ownerreturnedbooks').click(function() {
+    $('#aboutus').load("/owner/completed")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#letsborrow').click(function() {
+    $('#aboutus').load("/orders")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#myBtn').click(function() {
+    $('#aboutus').load("/user/orders/")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#sanctioned').click(function() {
+    $('#aboutus').load("/user/completed/")
+  });
+});
+</script>

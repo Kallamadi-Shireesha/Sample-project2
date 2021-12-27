@@ -1,0 +1,118 @@
+
+<div id="buttons">
+          <nav class="nav-container">
+          <% if @current_user %>
+           <h6><%= @current_user.name %> , <%= @current_user.role %>! <h6>
+                <a data-confirm="are ?" class="btn btn-outline-dark" rel="nofollow" data-method="delete" href="/signout">Logout</a>
+           <% end %>
+          </nav>
+  
+
+        <p>
+        <!--
+             <% if @current_user.is_owner? %>  
+              
+                <a class="btn btn-outline-dark mr-20" id="new_link" href="/menus">Edit Book List </a>
+                <a class="btn btn-outline-dark mr-20" id="allstudentrequestedbooks" href="/active/orders">All Requested  Books</a>
+                <a class="btn btn-outline-dark mr-20" id="ownerreturnedbooks" href="/owner/completed">owner Sanctioned Books</a>
+                
+             
+            <% end %>
+
+                <a class="btn btn-outline-dark mr-20" id="letsborrow" data-remote= "true" href="/orders">letsborrow</a>
+                <a class="btn btn-outline-dark mr-20" id="myBtn"  href="/user/orders">My Requested Books</a>
+                <a class="btn btn-outline-dark mr-20" id="sanctioned"  href="/user/completed">History</a>
+                -->
+            <% if @current_user.is_owner? %>  
+              
+                <a class="btn btn-outline-dark mr-20" id="new_link" >Edit Book List </a>
+                <a class="btn btn-outline-dark mr-20" id="allstudentrequestedbooks">All Requested  Books</a>
+                <a class="btn btn-outline-dark mr-20" id="ownerreturnedbooks">owner Sanctioned Books</a>
+                
+             
+            <% end %>
+
+                <a class="btn btn-outline-dark mr-20" id="letsborrow" data-remote= "true" >letsborrow</a>
+                <a class="btn btn-outline-dark mr-20" id="myBtn" data-remote= "true">My Requested Books</a>
+                <a class="btn btn-outline-dark mr-20" id="sanctioned" data-remote="true">History</a>
+        </p>
+              
+         
+
+        
+
+          <div id="aboutus">
+                    
+          <h1 class='heading'>Borrow Here :  </h1>
+          <h5>Borrow Id:  <%= session[:current_order_id] %></h5>
+
+          <%= render partial: "user-menu-table",
+                    locals: { menu_data: MenuItem.menu_by_id(ActiveMenu.first.active_menu) } , cached: true %>
+
+
+
+
+          <h3 class='form-label-header'>Your Requesting Books: </h3>
+
+          <% if Order.find(session[:current_order_id]).order_items != [] %>
+
+          <%= render partial: "user-cart-table",
+                    locals: { cart_data: Order.find(session[:current_order_id]).order_items, cached: true } %>
+                    <%= form_with(url: "/orders/#{session[:current_order_id]}?order_status=queue", method: "PUT", class: "form-container", id: "myForm" ) do %>
+                <button class='btn btn-outline-dark' onclick="myFunction()" data-remote= "true" >Finalise to send request </button>
+            <% end %>
+
+
+          <% end %>
+          </div>
+
+
+</div>
+
+
+
+<script>
+$(document).ready(function() {
+  $('#new_link').click(function() {
+    $('#aboutus').load("/menus")
+  });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#allstudentrequestedbooks').click(function() {
+    $('#aboutus').load("/active/orders")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#ownerreturnedbooks').click(function() {
+    $('#aboutus').load("/owner/completed")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#letsborrow').click(function() {
+    $('#buttons').load("/orders")
+    location.reload(true);
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#myBtn').click(function() {
+    $('#aboutus').load("/user/orders")
+  });
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#sanctioned').click(function() {
+    $('#aboutus').load("/user/completed")
+    
+  });
+});
+</script>

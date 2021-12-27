@@ -1,0 +1,28 @@
+<table class="table table-width-fixed table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        
+        <th scope="col">Id</th>
+        <th scope="col">Add</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% menu_data.each do |item| %>
+      <% cache item do %>
+        <tr>
+          <td ><%= item.name %></td>
+          <td><%= item.description %></td>
+          
+          <td><%= item.id %></td>
+          <td>
+            <%= form_with(url: "/order_items/?order_id=#{session[:current_order_id]}&menu_item_id=#{item.id}&menu_item_name=#{item.name}", method: "post") do %>  
+              <input type="image" src="/add.svg" class='trash'>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <%end%>
+    </tbody>
+</table>

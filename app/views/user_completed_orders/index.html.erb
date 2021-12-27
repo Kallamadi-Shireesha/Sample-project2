@@ -1,0 +1,17 @@
+<h1 class= "heading">History</h1>
+
+
+
+<% if @order_ids == [] %>
+  <h2> No Book has been sanctioned Yet ! </h2>
+<% end %>
+
+<% if @order_ids != [] %>
+  <% @order_ids.each do |id| %>
+
+    <%= render partial: "user-completed-order",
+               locals: { cart_data: Order.find(id).order_items }, cached: true  %>
+    
+    
+  <% end %>
+<% end %>

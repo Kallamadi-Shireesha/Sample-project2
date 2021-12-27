@@ -1,0 +1,24 @@
+<!--
+<h1 class='heading'>Completed Orders by Owner:</h1>
+
+<div class="links-container">
+    <%= link_to "Let's Borrow", orders_path, class: "btn btn-outline-dark mr-20" %>
+    <%= link_to "Active Books", "/active/orders", class: "btn btn-outline-dark mr-20" %>
+    <%= link_to "Edit Books List ", "/menus", class: "btn btn-outline-dark mr-20" %>
+    <%= link_to "Returned Books", "/owner/completed", class: "btn btn-outline-dark mr-20" %>
+    
+</div>
+-->
+<h1 class='heading'>Sanctioned books by Owner:</h1>
+
+
+
+<% Order.where(order_status: "completed").ids.each do |id| %>
+<% cache id do %>
+    <%= render partial: "owner-completed-order",
+               locals: { cart_data: Order.find(id).order_items } , cached: true %>
+
+    
+
+<% end %>
+<%end%>
